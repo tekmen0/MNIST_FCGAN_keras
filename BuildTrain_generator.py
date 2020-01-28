@@ -123,9 +123,10 @@ for epoch in range(epochs):
     print(f'Epoch: {epoch} \t Discriminator Loss: {d_loss} \t\t Generator Loss: {g_loss}')
 
 print("[INFO] Training is completed, saving models")
-generator.save("generator.h5")
-discriminator.save("discriminator.h5")
-gan.save("gan.h5")
+tag = "_" + str(batch_size) + "_" +str(steps_per_epoch) + "_" + str(epochs)
+generator.save(os.path.join('models','generator' + tag + '.h5')
+discriminator.save(os.path.join('models','discriminator' + tag + '.h5'))
+gan.save(os.path.join('models','gan' + tag + '.h5'))
 
 
 
