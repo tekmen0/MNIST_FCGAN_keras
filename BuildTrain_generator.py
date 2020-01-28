@@ -1,4 +1,10 @@
-#based on: https://medium.com/analytics-vidhya/implementing-a-gan-in-keras-d6c36bc6ab5f
+"""
+based on: https://medium.com/analytics-vidhya/implementing-a-gan-in-keras-d6c36bc6ab5f
+
+Script builds FCGAN, generator and discriminator models.
+Then trains and saves models on MNIST dataset.
+Feel free to customize and commit.
+"""
 
 from keras.optimizers import Adam
 from keras.datasets import mnist
@@ -84,6 +90,8 @@ gan_output = discriminator(fake_image)
 gan = Model(gan_input, gan_output)
 gan.compile(loss="binary_crossentropy", optimizer = optimizer)
 
+print("[INFO] Models are compiled")
+
 #train
 for epoch in range(epochs):
     for batch in range(steps_per_epoch):
@@ -105,29 +113,19 @@ for epoch in range(epochs):
         #its loss func works the same as normal classifier
         y_gen = np.ones(batch_size)
         g_loss = gan.train_on_batch(noise, y_gen)
+        print(f'\r[INFO] batch no: {batch}', end='')
 
     #weights_d = [list(w.reshape((-1))) for w in discriminator.get_weights()]
     print('\n'+'#'*60)
-    print(f'D WEIGHTS: {discriminator.get_weights().shape()}')
-    print(f'GAN WEIGHTS: {gan.get_weights().shape()}')
+    print(f'D WEIGHTS: {len(discriminator.get_weights())}')
+    print(f'GAN WEIGHTS: {len(gan.get_weights())}')
     print()
     print(f'Epoch: {epoch} \t Discriminator Loss: {d_loss} \t\t Generator Loss: {g_loss}')
 
-
-def show_images(noise):
-    generated_images = generator.predict(noise)
-    plt.figure(figsize=(10,10))
-
-    for i, image in enumerate(generated_images):
-        plt.subplot(10, 10, i+1)
-        plt.imshow(image.reshape((img_rows, img_cols, channels)), cmap='gray')
-        plt.axis('off')
-
-    plt.tight_layout()
-    plt.show()
-
-noise = np.random.normal(0, 1, size=(100, noise_dim))
-show_images(noise)
+print("[INFO] Training is completed, saving models")
+generator.save("generator.h5")
+discriminator.save("discriminator.h5")
+gan.save("gan.h5")
 
 
 
