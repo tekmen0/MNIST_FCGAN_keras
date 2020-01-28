@@ -8,8 +8,9 @@ from BuildTrain_generator import channels, img_rows, img_cols, noise_dim
 from keras.models import load_model
 import matplotlib.pyplot as plt
 import numpy as np
+import os
 
-generator = load_model('generator.h5')
+generator = load_model(os.path.join('models','generator.h5')
 
 def show_images(noise):
     generated_images = generator.predict(noise) 
