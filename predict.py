@@ -18,12 +18,10 @@ def show_images(noise):
 
     for i, image in enumerate(generated_images):
         plt.subplot(10, 10, i+1)
-        for i, image in enumerate(generated_images):
-            plt.subplot(10, 10, i+1)
-            if channels == 1:
-                plt.imshow(image.reshape((img_rows, img_cols)), cmap='gray')
-            else:
-                plt.imshow(image.reshape((img_rows, img_cols, channels)))
+        if channels == 1:
+            plt.imshow(image.reshape((img_rows, img_cols)), cmap='gray')
+        else:
+            plt.imshow(image.reshape((img_rows, img_cols, channels)))
         plt.axis('off')
 
     plt.tight_layout()
