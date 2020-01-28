@@ -4,6 +4,7 @@ Script to run generator model.
 
 #%matplotlib inline
 
+from BuildTrain_generator import channels, img_rows, img_cols, noise_dim
 from keras.models import load_model
 import matplotlib.pyplot as plt
 import numpy as np
